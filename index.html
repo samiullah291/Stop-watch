@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Stopwatch</title>
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 5% 8%,
+            rgba(0, 229, 255, 0.55) 0%,
+            rgba(0, 229, 255, 0.22) 12%,
+            transparent 32%
+        ),
+
+        radial-gradient(
+            circle at 95% 92%,
+            rgba(255, 0, 153, 0.55) 0%,
+            rgba(255, 0, 153, 0.22) 12%,
+            transparent 32%
+        ),
+
+        radial-gradient(
+            circle at 50% 45%,
+            rgba(105, 45, 255, 0.20),
+            transparent 45%
+        ),
+
+        linear-gradient(
+            135deg,
+            #050816 0%,
+            #101044 38%,
+            #220b3d 70%,
+            #090511 100%
+        );
+}
+
+
+/* =================================
+   MAIN
+================================= */
+
+.stopwatch {
+    width: 500px;
+    padding: 42px 35px;
+
+    text-align: center;
+
+    position: relative;
+    z-index: 2;
+}
+
+
+/* =================================
+   TITLE
+================================= */
+
+.title {
+    margin-bottom: 28px;
+
+    font-size: 13px;
+    letter-spacing: 7px;
+
+    text-transform: uppercase;
+
+    color: #cbd5ff;
+
+    text-shadow:
+        0 0 15px rgba(124, 92, 255, .45);
+}
+
+
+/* =================================
+   TIMER CIRCLE
+================================= */
+
+.timer-circle {
+    width: 310px;
+    height: 310px;
+
+    margin: auto;
+
+    padding: 8px;
+
+    border-radius: 50%;
+
+    background:
+        conic-gradient(
+            from 210deg,
+            #00e5ff,
+            #007cf0,
+            #7b2cff,
+            #ff2fb3,
+            #ff4d8d,
+            #7b2cff,
+            #007cf0,
+            #00e5ff
+        );
+
+    box-shadow:
+        0 0 30px rgba(0, 229, 255, .22),
+        0 0 60px rgba(123, 44, 255, .25),
+        0 0 100px rgba(255, 47, 179, .12);
+}
+
+
+.timer-inner {
+    width: 100%;
+    height: 100%;
+
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #24245a 0%,
+            #151535 38%,
+            #0a0b1d 75%,
+            #050611 100%
+        );
+
+    border: 1px solid rgba(255,255,255,.10);
+
+    box-shadow:
+        inset 0 0 50px rgba(0,0,0,.8),
+        inset 0 0 25px rgba(99,102,241,.12);
+}
+
+
+#timer {
+    font-size: 46px;
+
+    font-weight: 600;
+
+    letter-spacing: 3px;
+
+    color: #ffffff;
+
+    font-variant-numeric: tabular-nums;
+
+    text-shadow:
+        0 0 20px rgba(255,255,255,.18);
+}
+
+
+/* =================================
+   BUTTONS
+================================= */
+
+.buttons {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 20px;
+
+    margin-top: 38px;
+    margin-bottom: 35px;
+}
+
+
+.btn {
+    width: 58px;
+    height: 58px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255,255,255,.12);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+
+    font-size: 18px;
+
+    color: #e8eaff;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(49, 47, 95, .9),
+            rgba(17, 17, 43, .95)
+        );
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.4),
+        inset 0 1px 1px rgba(255,255,255,.10);
+
+    transition: .25s ease;
+}
+
+
+.btn:hover {
+    transform: translateY(-6px) scale(1.04);
+
+    border-color: rgba(255,255,255,.25);
+
+    box-shadow:
+        0 15px 30px rgba(0,0,0,.45),
+        0 0 25px rgba(123,44,255,.25);
+}
+
+
+.btn:active {
+    transform: scale(.90);
+}
+
+
+/* =================================
+   START
+================================= */
+
+.start {
+    width: 70px;
+    height: 70px;
+
+    border: none;
+
+    font-size: 22px;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #00e5ff 0%,
+            #4776ff 35%,
+            #8b2cff 70%,
+            #ff2fb3 100%
+        );
+
+    box-shadow:
+        0 12px 30px rgba(123,44,255,.40),
+        0 0 35px rgba(0,229,255,.18);
+}
+
+
+.start:hover {
+    background:
+        linear-gradient(
+            135deg,
+            #43efff,
+            #668cff,
+            #a855f7,
+            #ff5ac3
+        );
+
+    box-shadow:
+        0 15px 35px rgba(123,44,255,.5),
+        0 0 45px rgba(255,47,179,.22);
+}
+
+
+/* =================================
+   STORE
+================================= */
+
+.store {
+    color: #5eeaff;
+}
+
+.store:hover {
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            145deg,
+            #123e55,
+            #17245a
+        );
+
+    box-shadow:
+        0 0 25px rgba(0,229,255,.22);
+}
+
+
+/* =================================
+   STOP
+================================= */
+
+.stop {
+    color: #ff78bd;
+}
+
+.stop:hover {
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            145deg,
+            #4b183d,
+            #32164a
+        );
+
+    box-shadow:
+        0 0 25px rgba(255,47,179,.22);
+}
+
+
+/* =================================
+   CLEAR
+================================= */
+
+.clear {
+    color: #bda4ff;
+}
+
+.clear:hover {
+    color: white;
+
+    background:
+        linear-gradient(
+            145deg,
+            #38205c,
+            #24205b
+        );
+
+    box-shadow:
+        0 0 25px rgba(139,92,246,.25);
+}
+
+
+/* =================================
+   LAPS TITLE
+================================= */
+
+.laps-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 14px;
+
+    color: #9297c7;
+
+    font-size: 11px;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+}
+
+
+.laps-title::before,
+.laps-title::after {
+    content: "";
+
+    height: 1px;
+
+    flex: 1;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(139,92,246,.35),
+            transparent
+        );
+}
+
+
+/* =================================
+   LAP ITEMS
+================================= */
+
+#listlap {
+    list-style: none;
+
+    max-height: 180px;
+
+    overflow-y: auto;
+
+    padding-right: 4px;
+}
+
+
+#listlap li {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 13px 17px;
+
+    margin-bottom: 9px;
+
+    border-radius: 13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(54,48,100,.48),
+            rgba(20,18,50,.55)
+        );
+
+    border: 1px solid rgba(255,255,255,.07);
+
+    color: #dfe2ff;
+
+    font-size: 14px;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.04);
+
+    animation: lapIn .3s ease;
+}
+
+
+#listlap li::before {
+    content: "LAP";
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+
+    color: #8589b6;
+}
+
+
+#listlap::-webkit-scrollbar {
+    width: 4px;
+}
+
+
+#listlap::-webkit-scrollbar-thumb {
+    background:
+        linear-gradient(
+            #00e5ff,
+            #7b2cff,
+            #ff2fb3
+        );
+
+    border-radius: 10px;
+}
+
+
+/* =================================
+   ANIMATION
+================================= */
+
+@keyframes lapIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* =================================
+   MOBILE
+================================= */
+
+@media (max-width: 550px) {
+
+    .stopwatch {
+        width: 100%;
+        padding: 30px 18px;
+    }
+
+    .timer-circle {
+        width: 260px;
+        height: 260px;
+    }
+
+    #timer {
+        font-size: 36px;
+    }
+
+    .buttons {
+        gap: 13px;
+    }
+
+    .btn {
+        width: 52px;
+        height: 52px;
+    }
+
+    .start {
+        width: 64px;
+        height: 64px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+    <div class="stopwatch">
+
+        <div class="title">Stopwatch</div>
+
+        <!-- Circular Timer -->
+        <div class="timer-circle">
+            <div class="timer-inner">
+                <h1 id="timer">00:00:00</h1>
+            </div>
+        </div>
+
+        <!-- Circular Icon Buttons -->
+        <div class="buttons">
+
+            <button id="store" class="btn store" title="Store">
+                <i class="fa-solid fa-flag"></i>
+            </button>
+
+            <button id="start" class="btn start" title="Start">
+                <i class="fa-solid fa-play"></i>
+            </button>
+
+            <button id="Stop" class="btn stop" title="Stop">
+                <i class="fa-solid fa-pause"></i>
+            </button>
+
+            <button id="Clear" class="btn clear" title="Clear">
+                <i class="fa-solid fa-rotate-right"></i>
+            </button>
+
+        </div>
+
+        <div class="laps-title">
+            Saved Laps
+        </div>
+
+        <ul id="listlap"></ul>
+
+    </div>
+
+    <script src="App.js"></script>
+
+</body>
+</html>
+
